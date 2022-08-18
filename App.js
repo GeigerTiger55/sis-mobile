@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from 'react-native-paper';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Login from './screens/Login';
 import SisApi from './api';
@@ -11,8 +12,12 @@ import ItemsByType from './screens/ItemsByType';
 import ItemDetail from './screens/ItemDetail';
 import { COLORS } from './vocabs';
 import LogoTitle from './components/LogoTitle';
+import HamburgerDrawer from './components/HamburgerDrawer';
 
-const Stack = createNativeStackNavigator();
+
+// const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
 
 /**SIS application
  *
@@ -58,28 +63,40 @@ export default function App() {
   return (
     <NavigationContainer>
       {token
-        ? (<Stack.Navigator
+        ? (<Drawer.Navigator
+          userLegacyImplementation
+          drawerType='front'
           initialRouteName='Home'
+          drawerContent={(props) => <HamburgerDrawer {...props} />}
           screenOptions={{
             headerTitle: (props) => <LogoTitle {...props} />,
             headerTintColor: '#ffffff',
             headerStyle: {
               backgroundColor: COLORS.primary,
             },
-            headerRight:() => <Button onPress={logoutUser}>Logout</Button>,
+            // drawerPosition: "right"
+            // ,
+            // headerLeft: () => (
+            //   <Button onPress={() => navigation.goBack()} title="<" />
+            // )
           }} >
-          <Stack.Screen name='Home'>
+          {/* <Stack.Screen
+            name="HamburgerDrawer"
+            component={HamburgerDrawer}
+            options={{ headerShown: true }}
+          /> */}
+          <Drawer.Screen name='Home'>
             {(props) => <Home {...props} cohortItems={cohortItems} />}
-          </Stack.Screen>
-          <Stack.Screen name='ItemsByType'>
+          </Drawer.Screen>
+          <Drawer.Screen name='ItemsByType'>
             {(props) => <ItemsByType {...props} cohortItems={cohortItems} />}
-          </Stack.Screen>
-          <Stack.Screen
+          </Drawer.Screen>
+          <Drawer.Screen
             name='ItemDetail'
             component={ItemDetail}
           />
-        </Stack.Navigator>)
-        : (<Stack.Navigator
+        </Drawer.Navigator>)
+        : (<Drawer.Navigator
           initialRouteName='Login'
           screenOptions={{
             headerTitle: (props) => <LogoTitle {...props} />,
@@ -88,10 +105,10 @@ export default function App() {
               backgroundColor: COLORS.primary,
             },
           }} >
-          <Stack.Screen name='Login'>
+          <Drawer.Screen name='Login'>
             {(props) => <Login {...props} loginUser={loginUser} />}
-          </Stack.Screen>
-        </Stack.Navigator>)
+          </Drawer.Screen>
+        </Drawer.Navigator>)
       }
     </NavigationContainer >
   );
