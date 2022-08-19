@@ -50,7 +50,7 @@ export default function App() {
     setToken(null);
     SisApi.token = null;
   }
-  
+
   /**Calls SisApi to get all cohort items and update state  */
   async function fetchCohortItems() {
     console.log("fetchCohortItems");
@@ -64,32 +64,32 @@ export default function App() {
     <NavigationContainer>
       {token
         ? (<Drawer.Navigator
-          userLegacyImplementation
-          drawerType='front'
-          initialRouteName='Home'
-          drawerContent={(props) => <HamburgerDrawer {...props} />}
-          screenOptions={{
-            headerTitle: (props) => <LogoTitle {...props} />,
-            headerTintColor: '#ffffff',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+          // useLegacyImplementation
+          // drawerType='front'
+          // initialRouteName='Home'
+          // drawerContent={(props) => <HamburgerDrawer {...props} />}
+          // screenOptions={{
+          //   headerTitle: (props) => <LogoTitle {...props} />,
+          //   headerTintColor: '#ffffff',
+          //   headerStyle: {
+          //     backgroundColor: COLORS.primary,
+          //   },
             // drawerPosition: "right"
             // ,
             // headerLeft: () => (
             //   <Button onPress={() => navigation.goBack()} title="<" />
-            // )
-          }} >
+            // )}}
+          >
           {/* <Stack.Screen
             name="HamburgerDrawer"
             component={HamburgerDrawer}
             options={{ headerShown: true }}
           /> */}
           <Drawer.Screen name='Home'>
-            {(props) => <Home {...props} cohortItems={cohortItems} />}
+            {() => <Home  cohortItems={cohortItems} />}
           </Drawer.Screen>
           <Drawer.Screen name='ItemsByType'>
-            {(props) => <ItemsByType {...props} cohortItems={cohortItems} />}
+            {() => <ItemsByType  cohortItems={cohortItems} />}
           </Drawer.Screen>
           <Drawer.Screen
             name='ItemDetail'
